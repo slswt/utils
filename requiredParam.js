@@ -11,4 +11,4 @@ function requiredParam(param) {
   }
   throw requiredParamError;
 }
-export default requiredParam;
+module.exports = requiredParam;
