@@ -1,6 +1,6 @@
 const glob = require('glob');
 const fs = require('fs-extra');
-const { join, parse, dirname } = require('path');
+const { join, parse, dirname, relative } = require('path');
 const get = require('lodash/get');
 const identity = require('lodash/identity');
 const requiredParam = require('./requiredParam');
@@ -41,7 +41,7 @@ const projectBlueprints = ({
     return dependencies.filter(identity);
   };
 
-  const makeTfModule = ({ key, env, moduleName, moduleRoot }) => `
+  const makeTfModule = ({ key, env, moduleName, moduleRoot, targetFolder }) => `
 
 terraform {
   required_version = "> 0.11.0"
@@ -63,7 +63,7 @@ provider "aws" {
 }
 
 module "${moduleName}" {
-  source = "${moduleRoot}"
+  source = "${relative(targetFolder, moduleRoot)}"
   ${env ? `environment = "${env}"` : ''}
 }
 
@@ -115,6 +115,7 @@ output "${output}" {
         moduleName,
         moduleRoot,
         key,
+        targetFolder,
       });
       content += makeOutputs({ outputs, moduleName });
       const deps = getDependencies({ env, content: tfFilesContent });
