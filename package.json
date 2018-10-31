@@ -1,5 +1,5 @@
 {
-  "name": "utils",
+  "name": "@slswt/utils",
   "version": "0.0.3",
   "description": "",
   "main": "getDeploymentSchema.js",
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/slswt/utils#readme",
   "dependencies": {
     "fs-extra": "^7.0.0",
-    "glob": "^7.1.3"
+    "glob": "^7.1.3",
+    "lodash": "^4.17.11"
   }
 }

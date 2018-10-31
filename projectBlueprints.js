@@ -41,7 +41,13 @@ const projectBlueprints = ({
     return dependencies.filter(identity);
   };
 
-  const makeTfModule = ({ key, env, moduleName, moduleRoot, targetFolder }) => `
+  const makeTfModule = ({
+    key = requiredParam('key'),
+    env, /* env is optional */
+    moduleName = requiredParam('moduleName'),
+    moduleRoot = requiredParam('moduleRoot'),
+    targetFolder = requiredParam('targetFolder'),
+  }) => `
 
 terraform {
   required_version = "> 0.11.0"
@@ -146,6 +152,7 @@ output "${output}" {
       moduleName,
       moduleRoot: join(moduleRoot, env),
       key,
+      targetFolder,
     });
     content += makeOutputs({ outputs, moduleName });
     const deps = getDependencies({ env, content: tfFilesContent });
