@@ -1,10 +1,11 @@
 const glob = require('glob');
 const fs = require('fs');
 const { join, dirname } = require('path');
+const requiredParam = require('./requiredParam');
 
-const getDeploymentSchema = ({
-  terraformRoot = requiredParam('terraformRoot'),
-}) => {
+const getDeploymentSchema = (
+  terraformRoot = requiredParam('terraformRoot')
+) => {
   const files = [
     ...glob
       .sync(join(terraformRoot, 'Live/**/stage/main.tf'))
@@ -31,3 +32,5 @@ const getDeploymentSchema = ({
 
   console.log(schema);
 };
+
+module.exports = getDeploymentSchema;
